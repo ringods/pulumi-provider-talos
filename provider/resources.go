@@ -13,6 +13,7 @@ import (
 	pf "github.com/pulumi/pulumi-terraform-bridge/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
+	"github.com/pulumiverse/pulumi-talos/provider/native"
 	"github.com/pulumiverse/pulumi-talos/provider/pkg/version"
 	"github.com/siderolabs/terraform-provider-talos/pkg/talos"
 )
@@ -253,6 +254,9 @@ func Provider() tfbridge.ProviderInfo {
 				},
 			},
 			"talos_machine_disks": {Tok: tfbridge.MakeDataSource(talosPkg, machineMod, "getDisks")},
+		},
+		MuxWith: []tfbridge.MuxProvider{
+			native.NewProvider(),
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
 			PackageName: "@pulumiverse/talos",
